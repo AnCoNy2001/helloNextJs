@@ -1,19 +1,15 @@
-import Link from 'next/link';
+'use client'
 
-export default function Home () {
+import React from 'react'
+import { Box } from '@mui/material';
+
+const Home: React.FC = () => {
+
   return (
     <div>
-      <ul>
-        <li>
-          <Link href={'/facebook'}>Facebook</Link>
-        </li>
-        <li>
-          <Link href={'/youtube'}>Youtube</Link>
-        </li>
-        <li>
-          <Link href={'/tiktok'}>Tiktok</Link>
-        </li>
-      </ul>
+      <Box sx={{ marginTop: '10px', fontSize: '16px', fontWeight: '700' }} >Data Blog</Box>
     </div>
-  )
-}
+  );
+};
+
+export default Home;
