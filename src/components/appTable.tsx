@@ -12,6 +12,9 @@ import { Box, Button, Typography } from '@mui/material';
 import CreateModal from './create.modal';
 import UpdateModal from './update.modal';
 import Link from 'next/link';
+import Swal from 'sweetalert2'
+import { toast } from 'react-toastify';
+import { mutate } from 'swr';
 
 interface IProps {
   blogs?: IBlog[]
@@ -23,6 +26,37 @@ const AppTable: React.FC<IProps> = (props: IProps) => {
   const [blog, setBlog] = useState<IBlog | null>(null)
   const [showModalCreate, setShowModalCreate] = useState<boolean>(false)
   const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false)
+
+  const handleDelete = (item: IBlog) => {
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `Delete: ${item.title}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:8000/blogs/${item.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Accept': 'application/json,text/plain, */*',
+            "Content-Type": "application/json"
+          }
+        })
+          .then(res => res.json())
+          .then(res => {
+            if (res) {
+              toast.success('Delete successfully')
+              mutate('http://localhost:8000/blogs');
+            }
+          })
+
+      }
+    })
+  }
 
   return (
     <>
@@ -50,9 +84,13 @@ const AppTable: React.FC<IProps> = (props: IProps) => {
                 <TableCell align="left">{item.title}</TableCell>
                 <TableCell align="left">{item.author}</TableCell>
                 <TableCell align="left">
-                  <Button variant='contained' color='primary'>
-                    <Link href={`/blogs/${item?.id}`}>View</Link>
-                  </Button>
+
+                  <Link href={`/blogs/${item?.id}`}>
+                    <Button variant='contained' color='primary'>
+                      View
+                    </Button>
+                  </Link>
+
                   <Button
                     variant='contained'
                     color='warning'
@@ -64,7 +102,7 @@ const AppTable: React.FC<IProps> = (props: IProps) => {
                   >
                     Edit
                   </Button>
-                  <Button variant='contained' color='error'>Delete</Button>
+                  <Button variant='contained' color='error' onClick={() => handleDelete(item)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}

@@ -1,7 +1,11 @@
-'use client'
-
 import React from 'react'
 import { Box } from '@mui/material';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Home page',
+  description: 'Description bla bla',
+}
 
 const Home: React.FC = () => {
 

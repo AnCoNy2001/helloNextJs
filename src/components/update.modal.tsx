@@ -53,7 +53,7 @@ const UpdateModal: React.FC<IProps> = (props: IProps) => {
       setValue('author', blog.author);
       setValue('content', blog.content);
     }
-  }, [blog]);
+  }, [blog, setValue]);
 
   const onSubmit = async (data: any): Promise<void> => {
     await fetch(`http://localhost:8000/blogs/${id}`, {

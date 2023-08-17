@@ -1,10 +1,10 @@
 'use client'
 
 import React from 'react'
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Home } from '@mui/icons-material';
 
 const Header: React.FC = ({ }) => {
   const router = useRouter();
@@ -24,12 +24,11 @@ const Header: React.FC = ({ }) => {
             sx={{ mr: 2 }}
             onClick={handleBack}
           >
-            <MenuIcon />
+            <Home />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link href={'/blogs'}>Blogs</Link>
           </Typography>
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
     </Box>
